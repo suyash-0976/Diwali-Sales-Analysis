@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDA Analysis - Diwali Sales Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1 style="color: #f5a623; font-size: 1.5rem; font-weight: 700;">
+                    🪔 Diwali Sales Dashboard
+                </h1>
+                <div style="display: flex; gap: 30px;">
+                    <a href="../index.html" style="color: #eaeaea; text-decoration: none; font-weight: 500;">Home</a>
+                    <a href="ml_predictions.html" style="color: #eaeaea; text-decoration: none; font-weight: 500;">ML Predictions</a>
+                    <a href="eda_analysis.html" style="color: #f5a623; text-decoration: underline; font-weight: 500;">EDA Analysis</a>
+                    <a href="visualizations.html" style="color: #eaeaea; text-decoration: none; font-weight: 500;">Visualizations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 50px;">
+            <h1 style="font-size: 2.5rem; margin-bottom: 15px; color: #f5a623;">📊 Exploratory Data Analysis</h1>
+            <p style="font-size: 1.2rem; color: #eaeaea;">What the Diwali Sales data tells us</p>
+        </div>
+
+        <!-- Gender Analysis -->
+        <div class="card mb-4">
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <div style="font-size: 2rem; margin-right: 15px;">👥</div>
+                <h3 style="color: #f5a623; font-size: 1.3rem;">Gender Analysis</h3>
+            </div>
+            <div id="gender-loading"></div>
+            <div id="gender-content" style="display: none;">
+                <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                    <strong>Key Finding:</strong> 
+                    <span id="gender-insight"></span>
+                </p>
+                <div class="grid-2">
+                    <div>
+                        <h4 style="color: #e94560; margin-bottom: 10px;">Revenue Distribution</h4>
+                        <div id="gender-revenue-details"></div>
+                    </div>
+                    <div>
+                        <h4 style="color: #e94560; margin-bottom: 10px;">Customer Count</h4>
+                        <div id="gender-count-details"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Age Group Analysis -->
+        <div class="card mb-4">
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <div style="font-size: 2rem; margin-right: 15px;">🎂</div>
+                <h3 style="color: #f5a623; font-size: 1.3rem;">Age Group Analysis</h3>
+            </div>
+            <div id="age-loading"></div>
+            <div id="age-content" style="display: none;">
+                <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                    <strong>Key Finding:</strong> 
+                    <span id="age-insight"></span>
+                </p>
+                <div id="age-details"></div>
+            </div>
+        </div>
+
+        <!-- State Analysis -->
+        <div class="card mb-4">
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <div style="font-size: 2rem; margin-right: 15px;">🗺️</div>
+                <h3 style="color: #f5a623; font-size: 1.3rem;">State-wise Performance</h3>
+            </div>
+            <div id="state-loading"></div>
+            <div id="state-content" style="display: none;">
+                <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                    <strong>Key Finding:</strong> 
+                    <span id="state-insight"></span>
+                </p>
+                <div id="state-details"></div>
+            </div>
+        </div>
+
+        <!-- Marital Status Analysis -->
+        <div class="card mb-4">
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <div style="font-size: 2rem; margin-right: 15px;">💍</div>
+                <h3 style="color: #f5a623; font-size: 1.3rem;">Marital Status Analysis</h3>
+            </div>
+            <div id="marital-loading"></div>
+            <div id="marital-content" style="display: none;">
+                <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                    <strong>Key Finding:</strong> 
+                    <span id="marital-insight"></span>
+                </p>
+                <div id="marital-details"></div>
+            </div>
+        </div>
+
+        <!-- Occupation Analysis -->
+        <div class="card mb-4">
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <div style="font-size: 2rem; margin-right: 15px;">💼</div>
+                <h3 style="color: #f5a623; font-size: 1.3rem;">Occupation Analysis</h3>
+            </div>
+            <div id="occupation-loading"></div>
+            <div id="occupation-content" style="display: none;">
+                <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                    <strong>Key Finding:</strong> 
+                    <span id="occupation-insight"></span>
+                </p>
+                <div id="occupation-details"></div>
+            </div>
+        </div>
+
+        <!-- Product Category Analysis -->
+        <div class="card mb-4">
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <div style="font-size: 2rem; margin-right: 15px;">🛍️</div>
+                <h3 style="color: #f5a623; font-size: 1.3rem;">Product Category Analysis</h3>
+            </div>
+            <div id="category-loading"></div>
+            <div id="category-content" style="display: none;">
+                <p style="font-size: 1.1rem; margin-bottom: 15px;">
+                    <strong>Key Finding:</strong> 
+                    <span id="category-insight"></span>
+                </p>
+                <div id="category-details"></div>
+            </div>
+        </div>
+
+        <!-- Final Conclusion -->
+        <div class="card" style="border: 2px solid #f5a623; background: rgba(245, 166, 35, 0.1);">
+            <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                <div style="font-size: 2.5rem; margin-right: 15px;">🏆</div>
+                <h3 style="color: #f5a623; font-size: 1.5rem;">Key Finding</h3>
+            </div>
+            <p style="font-size: 1.2rem; line-height: 1.8; font-weight: 500;">
+                Married women aged 26-35 from Uttar Pradesh, Maharashtra & Karnataka working in IT, Healthcare and Aviation are most likely to purchase Food, Clothing & Electronics during Diwali.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="p-4" style="background: #1a1a2e; text-align: center; border-top: 1px solid #2a2a4a;">
+        <p style="color: #eaeaea;">
+            🪔 Diwali Sales Dashboard | Built with Python, Flask & Chart.js
+        </p>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        // Load Gender Analysis
+        async function loadGenderAnalysis() {
+            showLoading('gender-loading');
+            try {
+                const data = await fetchAPI('/api/eda/gender');
+                hideLoading('gender-loading');
+                document.getElementById('gender-loading').style.display = 'none';
+                document.getElementById('gender-content').style.display = 'block';
+                
+                const totalRevenue = data.amounts.F + data.amounts.M;
+                const femalePercentage = ((data.amounts.F / totalRevenue) * 100).toFixed(1);
+                
+                document.getElementById('gender-insight').innerHTML = 
+                    `Female buyers generate <strong>${femalePercentage}%</strong> of total revenue with <strong>${data.counts.F.toLocaleString()}</strong> customers, while male customers contribute <strong>${(100 - femalePercentage).toFixed(1)}%</strong> with <strong>${data.counts.M.toLocaleString()}</strong> customers.`;
+                
+                document.getElementById('gender-revenue-details').innerHTML = `
+                    <div style="margin-bottom: 10px;">
+                        <span style="color: #e94560;">👩 Female:</span> ${formatCurrency(data.amounts.F)} (${femalePercentage}%)
+                    </div>
+                    <div>
+                        <span style="color: #00b4d8;">👨 Male:</span> ${formatCurrency(data.amounts.M)} (${(100 - femalePercentage).toFixed(1)}%)
+                    </div>
+                `;
+                
+                document.getElementById('gender-count-details').innerHTML = `
+                    <div style="margin-bottom: 10px;">
+                        <span style="color: #e94560;">👩 Female:</span> ${data.counts.F.toLocaleString()} customers
+                    </div>
+                    <div>
+                        <span style="color: #00b4d8;">👨 Male:</span> ${data.counts.M.toLocaleString()} customers
+                    </div>
+                `;
+                
+            } catch (error) {
+                hideLoading('gender-loading');
+                document.getElementById('gender-loading').innerHTML = `<p style="color: #e94560;">❌ Failed to load gender data</p>`;
+            }
+        }
+
+        // Load Age Group Analysis
+        async function loadAgeAnalysis() {
+            showLoading('age-loading');
+            try {
+                const data = await fetchAPI('/api/eda/age');
+                hideLoading('age-loading');
+                document.getElementById('age-loading').style.display = 'none';
+                document.getElementById('age-content').style.display = 'block';
+                
+                const top3 = data.age_groups.slice(0, 3);
+                document.getElementById('age-insight').innerHTML = 
+                    `The top 3 age groups by spending are <strong>${top3.join(', ')}</strong>, with ${data.age_groups[0]} leading significantly.`;
+                
+                const detailsHtml = data.age_groups.map((age, index) => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: ${index < 3 ? 'rgba(245, 166, 35, 0.1)' : 'transparent'}; border-radius: 6px; margin-bottom: 8px;">
+                        <span style="font-weight: 600;">${age}</span>
+                        <div style="text-align: right;">
+                            <div style="color: #e94560; font-weight: 600;">${formatCurrency(data.amounts[index])}</div>
+                            <div style="color: #999; font-size: 0.9rem;">${data.counts[index]} customers</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('age-details').innerHTML = detailsHtml;
+                
+            } catch (error) {
+                hideLoading('age-loading');
+                document.getElementById('age-loading').innerHTML = `<p style="color: #e94560;">❌ Failed to load age data</p>`;
+            }
+        }
+
+        // Load State Analysis
+        async function loadStateAnalysis() {
+            showLoading('state-loading');
+            try {
+                const data = await fetchAPI('/api/eda/state');
+                hideLoading('state-loading');
+                document.getElementById('state-loading').style.display = 'none';
+                document.getElementById('state-content').style.display = 'block';
+                
+                const top3 = data.states.slice(0, 3);
+                document.getElementById('state-insight').innerHTML = 
+                    `The top 3 states by revenue are <strong>${top3.join(', ')}</strong>, with ${data.states[0]} generating the highest sales.`;
+                
+                const detailsHtml = data.states.map((state, index) => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: ${index < 3 ? 'rgba(245, 166, 35, 0.1)' : 'transparent'}; border-radius: 6px; margin-bottom: 8px;">
+                        <span style="font-weight: 600;">${state}</span>
+                        <div style="text-align: right;">
+                            <div style="color: #e94560; font-weight: 600;">${formatCurrency(data.amounts[index])}</div>
+                            <div style="color: #999; font-size: 0.9rem;">${data.orders[index]} orders</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('state-details').innerHTML = detailsHtml;
+                
+            } catch (error) {
+                hideLoading('state-loading');
+                document.getElementById('state-loading').innerHTML = `<p style="color: #e94560;">❌ Failed to load state data</p>`;
+            }
+        }
+
+        // Load Marital Status Analysis
+        async function loadMaritalAnalysis() {
+            showLoading('marital-loading');
+            try {
+                const data = await fetchAPI('/api/eda/marital');
+                hideLoading('marital-loading');
+                document.getElementById('marital-loading').style.display = 'none';
+                document.getElementById('marital-content').style.display = 'block';
+                
+                const marriedTotal = data.male_amounts[1] + data.female_amounts[1];
+                const singleTotal = data.male_amounts[0] + data.female_amounts[0];
+                const marriedPercentage = ((marriedTotal / (marriedTotal + singleTotal)) * 100).toFixed(1);
+                
+                document.getElementById('marital-insight').innerHTML = 
+                    `Married individuals contribute <strong>${marriedPercentage}%</strong> of total spending, with married women being the highest spending group.`;
+                
+                document.getElementById('marital-details').innerHTML = `
+                    <div class="grid-2">
+                        <div>
+                            <h4 style="color: #e94560; margin-bottom: 15px;">Married (Status 1)</h4>
+                            <div style="margin-bottom: 10px;">
+                                <span style="color: #e94560;">👩 Female:</span> ${formatCurrency(data.female_amounts[1])}
+                            </div>
+                            <div>
+                                <span style="color: #00b4d8;">👨 Male:</span> ${formatCurrency(data.male_amounts[1])}
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="color: #e94560; margin-bottom: 15px;">Single (Status 0)</h4>
+                            <div style="margin-bottom: 10px;">
+                                <span style="color: #e94560;">👩 Female:</span> ${formatCurrency(data.female_amounts[0])}
+                            </div>
+                            <div>
+                                <span style="color: #00b4d8;">👨 Male:</span> ${formatCurrency(data.male_amounts[0])}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+            } catch (error) {
+                hideLoading('marital-loading');
+                document.getElementById('marital-loading').innerHTML = `<p style="color: #e94560;">❌ Failed to load marital status data</p>`;
+            }
+        }
+
+        // Load Occupation Analysis
+        async function loadOccupationAnalysis() {
+            showLoading('occupation-loading');
+            try {
+                const data = await fetchAPI('/api/eda/occupation');
+                hideLoading('occupation-loading');
+                document.getElementById('occupation-loading').style.display = 'none';
+                document.getElementById('occupation-content').style.display = 'block';
+                
+                const top3 = data.occupations.slice(0, 3);
+                document.getElementById('occupation-insight').innerHTML = 
+                    `The top 3 occupations by spending are <strong>${top3.join(', ')}</strong>, with ${data.occupations[0]} professionals spending the most.`;
+                
+                const detailsHtml = data.occupations.map((occupation, index) => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: ${index < 3 ? 'rgba(245, 166, 35, 0.1)' : 'transparent'}; border-radius: 6px; margin-bottom: 8px;">
+                        <span style="font-weight: 600;">${occupation}</span>
+                        <div style="color: #e94560; font-weight: 600;">${formatCurrency(data.amounts[index])}</div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('occupation-details').innerHTML = detailsHtml;
+                
+            } catch (error) {
+                hideLoading('occupation-loading');
+                document.getElementById('occupation-loading').innerHTML = `<p style="color: #e94560;">❌ Failed to load occupation data</p>`;
+            }
+        }
+
+        // Load Category Analysis
+        async function loadCategoryAnalysis() {
+            showLoading('category-loading');
+            try {
+                const data = await fetchAPI('/api/eda/category');
+                hideLoading('category-loading');
+                document.getElementById('category-loading').style.display = 'none';
+                document.getElementById('category-content').style.display = 'block';
+                
+                const top3 = data.categories.slice(0, 3);
+                document.getElementById('category-insight').innerHTML = 
+                    `The top 3 product categories by revenue are <strong>${top3.join(', ')}</strong>, with ${data.categories[0]} leading significantly.`;
+                
+                const detailsHtml = data.categories.map((category, index) => `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: ${index < 3 ? 'rgba(245, 166, 35, 0.1)' : 'transparent'}; border-radius: 6px; margin-bottom: 8px;">
+                        <span style="font-weight: 600;">${category}</span>
+                        <div style="text-align: right;">
+                            <div style="color: #e94560; font-weight: 600;">${formatCurrency(data.amounts[index])}</div>
+                            <div style="color: #999; font-size: 0.9rem;">${data.counts[index]} purchases</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('category-details').innerHTML = detailsHtml;
+                
+            } catch (error) {
+                hideLoading('category-loading');
+                document.getElementById('category-loading').innerHTML = `<p style="color: #e94560;">❌ Failed to load category data</p>`;
+            }
+        }
+
+        // Load all analyses
+        async function loadAllAnalyses() {
+            await Promise.all([
+                loadGenderAnalysis(),
+                loadAgeAnalysis(),
+                loadStateAnalysis(),
+                loadMaritalAnalysis(),
+                loadOccupationAnalysis(),
+                loadCategoryAnalysis()
+            ]);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadAllAnalyses);
+    </script>
+</body>
+</html>

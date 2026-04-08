@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Predictions - Diwali Sales Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1 style="color: #f5a623; font-size: 1.5rem; font-weight: 700;">
+                    🪔 Diwali Sales Dashboard
+                </h1>
+                <div style="display: flex; gap: 30px;">
+                    <a href="../index.html" style="color: #eaeaea; text-decoration: none; font-weight: 500;">Home</a>
+                    <a href="ml_predictions.html" style="color: #f5a623; text-decoration: underline; font-weight: 500;">ML Predictions</a>
+                    <a href="eda_analysis.html" style="color: #eaeaea; text-decoration: none; font-weight: 500;">EDA Analysis</a>
+                    <a href="visualizations.html" style="color: #eaeaea; text-decoration: none; font-weight: 500;">Visualizations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 40px 20px;">
+        <!-- Section A: Model Performance -->
+        <section class="mb-8">
+            <h2 style="font-size: 2rem; margin-bottom: 30px; text-align: center;">🤖 ML Model Performance</h2>
+            <div class="card">
+                <div id="model-performance-loading"></div>
+                <div id="model-performance-content" style="display: none;">
+                    <div style="overflow-x: auto;">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>R² Score</th>
+                                    <th>MAE</th>
+                                    <th>RMSE</th>
+                                    <th>Train R²</th>
+                                </tr>
+                            </thead>
+                            <tbody id="model-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="model-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section B: Live Prediction -->
+        <section>
+            <h2 style="font-size: 2rem; margin-bottom: 30px; text-align: center;">🔮 Predict Purchase Amount</h2>
+            <div class="grid-2">
+                <!-- Prediction Form -->
+                <div class="card">
+                    <h3 style="color: #f5a623; margin-bottom: 20px;">Customer Details</h3>
+                    <form id="prediction-form">
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select id="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="F">Female</option>
+                                <option value="M">Male</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" min="10" max="90" required placeholder="Enter age (10-90)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="marital_status">Marital Status</label>
+                            <select id="marital_status" required>
+                                <option value="">Select Status</option>
+                                <option value="0">Single (0)</option>
+                                <option value="1">Married (1)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="orders">Number of Orders</label>
+                            <input type="number" id="orders" min="1" max="5" required placeholder="Enter orders (1-5)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <select id="state" required>
+                                <option value="">Select State</option>
+                                <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="West Bengal">West Bengal</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="zone">Zone</label>
+                            <select id="zone" required>
+                                <option value="">Select Zone</option>
+                                <option value="Central">Central</option>
+                                <option value="Eastern">Eastern</option>
+                                <option value="Northern">Northern</option>
+                                <option value="Southern">Southern</option>
+                                <option value="Western">Western</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="occupation">Occupation</label>
+                            <select id="occupation" required>
+                                <option value="">Select Occupation</option>
+                                <option value="IT Sector">IT Sector</option>
+                                <option value="Healthcare">Healthcare</option>
+                                <option value="Aviation">Aviation</option>
+                                <option value="Banking">Banking</option>
+                                <option value="Govt">Govt</option>
+                                <option value="Automobile">Automobile</option>
+                                <option value="Construction">Construction</option>
+                                <option value="Food Processing">Food Processing</option>
+                                <option value="Lawyer">Lawyer</option>
+                                <option value="Media">Media</option>
+                                <option value="Retail">Retail</option>
+                                <option value="Hospitality">Hospitality</option>
+                                <option value="Agriculture">Agriculture</option>
+                                <option value="Textile">Textile</option>
+                                <option value="Chemical">Chemical</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="product_category">Product Category</label>
+                            <select id="product_category" required>
+                                <option value="">Select Category</option>
+                                <option value="Food">Food</option>
+                                <option value="Clothing & Apparel">Clothing & Apparel</option>
+                                <option value="Electronics & Gadgets">Electronics & Gadgets</option>
+                                <option value="Footwear & Shoes">Footwear & Shoes</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Auto">Auto</option>
+                                <option value="Hand & Power Tools">Hand & Power Tools</option>
+                                <option value="Stationery">Stationery</option>
+                                <option value="Tupperware">Tupperware</option>
+                                <option value="Games & Toys">Games & Toys</option>
+                                <option value="Sports Products">Sports Products</option>
+                                <option value="Books">Books</option>
+                                <option value="Decor">Decor</option>
+                                <option value="Beauty">Beauty</option>
+                                <option value="Household items">Household items</option>
+                                <option value="Pet Care">Pet Care</option>
+                                <option value="Veterinary">Veterinary</option>
+                                <option value="Office">Office</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-secondary" style="width: 100%;">
+                            🔮 Predict
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Prediction Results -->
+                <div class="card">
+                    <h3 style="color: #f5a623; margin-bottom: 20px;">Prediction Results</h3>
+                    <div id="prediction-results">
+                        <p style="text-align: center; color: #999; padding: 40px 0;">
+                            Fill in the form and click "Predict" to see results
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="p-4" style="background: #1a1a2e; text-align: center; border-top: 1px solid #2a2a4a;">
+        <p style="color: #eaeaea;">
+            🪔 Diwali Sales Dashboard | Built with Python, Flask & Chart.js
+        </p>
+    </footer>
+
+    <script src="../script.js"></script>
+    <script>
+        let modelChart = null;
+
+        // Load model performance data
+        async function loadModelPerformance() {
+            const loadingDiv = document.getElementById('model-performance-loading');
+            const contentDiv = document.getElementById('model-performance-content');
+            
+            showLoading('model-performance-loading');
+            
+            try {
+                const data = await fetchAPI('/api/ml/results');
+                hideLoading('model-performance-loading');
+                loadingDiv.style.display = 'none';
+                contentDiv.style.display = 'block';
+                
+                // Populate table
+                const tbody = document.getElementById('model-table-body');
+                tbody.innerHTML = '';
+                
+                let bestModel = '';
+                let bestR2 = -1;
+                
+                Object.entries(data).forEach(([model, metrics]) => {
+                    const row = document.createElement('tr');
+                    if (metrics.r2 > bestR2) {
+                        bestR2 = metrics.r2;
+                        bestModel = model;
+                    }
+                    
+                    row.innerHTML = `
+                        <td style="font-weight: 600;">${model}</td>
+                        <td>${metrics.r2.toFixed(4)}</td>
+                        <td>${metrics.mae.toFixed(2)}</td>
+                        <td>${metrics.rmse.toFixed(2)}</td>
+                        <td>${metrics.train_r2.toFixed(4)}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+                
+                // Highlight best model
+                const rows = tbody.querySelectorAll('tr');
+                rows.forEach((row, index) => {
+                    const modelName = Object.keys(data)[index];
+                    if (modelName === bestModel) {
+                        row.classList.add('best-model');
+                    }
+                });
+                
+                // Create chart
+                createModelChart(data);
+                
+            } catch (error) {
+                hideLoading('model-performance-loading');
+                loadingDiv.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <p style="color: #e94560;">❌ ${error.message}</p>
+                        <p style="color: #999; margin-top: 10px;">Please run train_models.py first</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Create model performance chart
+        function createModelChart(data) {
+            const ctx = document.getElementById('model-chart').getContext('2d');
+            
+            const chartData = {
+                labels: Object.keys(data),
+                datasets: [{
+                    label: 'R² Score',
+                    data: Object.values(data).map(m => m.r2),
+                    backgroundColor: [
+                        '#e94560',
+                        '#f5a623',
+                        '#00b4d8',
+                        '#06d6a0'
+                    ],
+                    borderColor: '#1a1a2e',
+                    borderWidth: 2
+                }]
+            };
+            
+            const config = createChartConfig('bar', chartData, {
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: 'Model R² Score Comparison',
+                        color: '#eaeaea',
+                        font: {
+                            size: 16
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1,
+                        title: {
+                            display: true,
+                            text: 'R² Score',
+                            color: '#eaeaea'
+                        }
+                    }
+                }
+            });
+            
+            if (modelChart) {
+                modelChart.destroy();
+            }
+            modelChart = new Chart(ctx, config);
+        }
+
+        // Handle prediction form submission
+        document.getElementById('prediction-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                gender: document.getElementById('gender').value,
+                age: parseInt(document.getElementById('age').value),
+                marital_status: parseInt(document.getElementById('marital_status').value),
+                orders: parseInt(document.getElementById('orders').value),
+                state: document.getElementById('state').value,
+                zone: document.getElementById('zone').value,
+                occupation: document.getElementById('occupation').value,
+                product_category: document.getElementById('product_category').value
+            };
+            
+            const resultsDiv = document.getElementById('prediction-results');
+            resultsDiv.innerHTML = '<div class="loading-spinner"></div>';
+            
+            try {
+                const queryParams = new URLSearchParams(formData).toString();
+                console.log("Sending prediction request with params:", queryParams);
+                const predictions = await fetchAPI(`/api/ml/predict?${queryParams}`);
+                
+                // Find highest and lowest predictions
+                const entries = Object.entries(predictions);
+                const highest = entries.reduce((a, b) => a[1] > b[1] ? a : b);
+                const lowest = entries.reduce((a, b) => a[1] < b[1] ? a : b);
+                
+                // Display results
+                resultsDiv.innerHTML = `
+                    <div class="grid-2">
+                        ${entries.map(([model, amount]) => `
+                            <div class="result-card ${model === highest[0] ? 'highest' : ''} ${model === lowest[0] ? 'lowest' : ''}">
+                                <h4 style="margin-bottom: 10px; color: #f5a623;">${model}</h4>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #e94560;">
+                                    ${formatCurrency(Math.round(amount))}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div style="margin-top: 20px; padding: 15px; background: rgba(245, 166, 35, 0.1); border-radius: 8px; border-left: 4px solid #f5a623;">
+                        <p style="margin: 0; color: #eaeaea;">
+                            <strong>💡 Insight:</strong> ${highest[0]} predicts the highest spending at ${formatCurrency(Math.round(highest[1]))}, 
+                            while ${lowest[0]} is most conservative at ${formatCurrency(Math.round(lowest[1]))}.
+                        </p>
+                    </div>
+                `;
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <p style="color: #e94560;">❌ ${error.message}</p>
+                    </div>
+                `;
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadModelPerformance);
+    </script>
+</body>
+</html>

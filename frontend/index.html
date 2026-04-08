@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🪔 Diwali Sales Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1 style="color: #f5a623; font-size: 1.5rem; font-weight: 700;">
+                    🪔 Diwali Sales Dashboard
+                </h1>
+                <div style="display: flex; gap: 30px;">
+                    <a href="index.html" style="color: #f5a623; text-decoration: underline; font-weight: 500;">Home</a>
+                    <a href="pages/ml_predictions.html" style="color: #eaeaea; text-decoration: none; font-weight: 500;">ML Predictions</a>
+                    <a href="pages/eda_analysis.html" style="color: #eaeaea; text-decoration: none; font-weight: 500;">EDA Analysis</a>
+                    <a href="pages/visualizations.html" style="color: #eaeaea; text-decoration: none; font-weight: 500;">Visualizations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="p-4" style="text-align: center; padding: 80px 20px;">
+        <div class="container" style="max-width: 800px; margin: 0 auto;">
+            <h1 style="font-size: 3rem; font-weight: 700; margin-bottom: 20px; background: linear-gradient(45deg, #e94560, #f5a623); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Diwali Sales Intelligence Platform
+            </h1>
+            <p style="font-size: 1.3rem; color: #eaeaea; margin-bottom: 40px;">
+                Powered by Machine Learning & Data Analysis
+                <span style="margin-left: 10px;">🪔 ✨ 🎆 🎇</span>
+            </p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="pages/ml_predictions.html" class="btn btn-primary">View ML Models</a>
+                <a href="pages/eda_analysis.html" class="btn btn-secondary">Explore Analysis</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Bar -->
+    <section class="p-4" style="background: #1a1a2e;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto;">
+            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2rem;">📊 Dashboard Overview</h2>
+            <div class="grid-4" id="stats-container">
+                <div class="card text-center">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">🧾</div>
+                    <h3 style="color: #f5a623; margin-bottom: 10px;">Total Records</h3>
+                    <div id="total-records" style="font-size: 2rem; font-weight: 700; color: #e94560;">0</div>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">💰</div>
+                    <h3 style="color: #f5a623; margin-bottom: 10px;">Total Revenue</h3>
+                    <div id="total-revenue" style="font-size: 2rem; font-weight: 700; color: #e94560;">₹0</div>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">📦</div>
+                    <h3 style="color: #f5a623; margin-bottom: 10px;">Total Orders</h3>
+                    <div id="total-orders" style="font-size: 2rem; font-weight: 700; color: #e94560;">0</div>
+                </div>
+                <div class="card text-center">
+                    <div style="font-size: 2rem; margin-bottom: 10px;">👥</div>
+                    <h3 style="color: #f5a623; margin-bottom: 10px;">Unique Customers</h3>
+                    <div id="unique-customers" style="font-size: 2rem; font-weight: 700; color: #e94560;">0</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Insights -->
+    <section class="p-4">
+        <div class="container" style="max-width: 1200px; margin: 0 auto;">
+            <h2 style="text-align: center; margin-bottom: 40px; font-size: 2rem;">🔍 Key Insights</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 15px;">👩</div>
+                    <h3 style="color: #f5a623; margin-bottom: 10px;">Gender Insights</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;">Female buyers generate <strong>70% of total revenue</strong>, showing strong purchasing power during Diwali season.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 15px;">📍</div>
+                    <h3 style="color: #f5a623; margin-bottom: 10px;">Regional Performance</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;"><strong>UP, Maharashtra & Karnataka</strong> are the top 3 states driving maximum sales volume.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 15px;">💼</div>
+                    <h3 style="color: #f5a623; margin-bottom: 10px;">Occupation Analysis</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;"><strong>IT Sector professionals</strong> spend the most, followed by Healthcare and Aviation sectors.</p>
+                </div>
+                <div class="card">
+                    <div style="font-size: 2rem; margin-bottom: 15px;">🛒</div>
+                    <h3 style="color: #f5a623; margin-bottom: 10px;">Popular Categories</h3>
+                    <p style="font-size: 1.1rem; line-height: 1.6;"><strong>Food, Clothing & Electronics</strong> emerge as the top product categories during festive shopping.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="p-4" style="background: #1a1a2e; text-align: center; border-top: 1px solid #2a2a4a;">
+        <p style="color: #eaeaea;">
+            🪔 Diwali Sales Dashboard | Built with Python, Flask & Chart.js
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Load summary stats on page load
+        async function loadSummaryStats() {
+            try {
+                const data = await fetchAPI('/api/summary');
+                
+                // Animate counters
+                const recordsElement = document.getElementById('total-records');
+                const revenueElement = document.getElementById('total-revenue');
+                const ordersElement = document.getElementById('total-orders');
+                const customersElement = document.getElementById('unique-customers');
+                
+                animateCounter(recordsElement, data.total_records);
+                animateCounter(ordersElement, data.total_orders);
+                animateCounter(customersElement, data.unique_customers);
+                
+                // Animate revenue with proper formatting
+                let currentRevenue = 0;
+                const targetRevenue = data.total_revenue;
+                const startTime = performance.now();
+                const duration = 2000;
+                
+                function updateRevenue(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    currentRevenue = Math.floor(targetRevenue * progress);
+                    revenueElement.textContent = formatCurrency(currentRevenue);
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(updateRevenue);
+                    }
+                }
+                
+                requestAnimationFrame(updateRevenue);
+                
+            } catch (error) {
+                console.error('Error loading summary stats:', error);
+                showError('Failed to load dashboard statistics. Please ensure the backend server is running.');
+            }
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', loadSummaryStats);
+    </script>
+</body>
+</html>
